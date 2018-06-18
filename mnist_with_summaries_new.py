@@ -119,10 +119,10 @@ with tf.name_scope('train'):
     # learning_rate虽然是固定的，后面会自适应，根据上一次的结果 所以大数据量的话，不如定义好策略，这样省时间
 with tf.name_scope('accuracy'):
     with tf.name_scope('correct_prediction'):
-        correct_prediction = tf.equal(tf.argmax(y1, 1), tf.arg_max(y, 1)) ) 
+        correct_prediction = tf.equal(tf.argmax(y1, 1), tf.arg_max(y, 1))
     # 预测值最大的索引 和真实值的索引
     with tf.name_scope('accuracy'):
-        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) ) 
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) 
     # true 1 false 0 reduce_mean 是一个比例得到的结果
 tf.summary.scalar('accuracy', accuracy)
 

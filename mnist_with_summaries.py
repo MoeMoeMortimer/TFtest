@@ -219,7 +219,7 @@ def main(_):
   
   
 if __name__ == '__main__':  
-  parser = argparse.ArgumentParser # 设置一个解析器，argparse是对象命令行解析模块  
+  parser = argparse.ArgumentParser() # 设置一个解析器，argparse是对象命令行解析模块  
   # 向该对象中添加命令行参数和选项
   parser.add_argument('--fake_data', nargs='?', const=True, type=bool,  
                       default=False,  

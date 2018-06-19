@@ -20,7 +20,7 @@ sess = tf.InteractiveSession()
 """
 为了在TensorBoard中展示节点名称，设计网络时会常使用tf.name_scope限制命名空间，
 在这个with下所有的节点都会自动命名为input/xxx这样的格式。
-定义输入x和y的placeholder，并将输入的一维数据变形为28×28的图片，
+定义输入x和y的placeholder，并将输入的一维数据变形为28×28的图片存储到另一个tensor，
 我们用2维的浮点数张量来表示这些图，这个张量的形状是[None，784 ]，
 这样就可以使用tf.summary.image将图片数据汇总给TensorBoard展示了。
 """
@@ -84,7 +84,7 @@ def nn_layer(input_tensor, input_dim, output_dim, layer_name,act=tf.nn.relu):
 
 """
 使用刚定义好的nn_layer创建一层神经网络，输入维度是图片的尺寸（784=28×28），输出的维度是隐藏节点数500.
-再创建一个Droput层，并使用tf.summary.scalar记录keep_prob。然后再使用nn_layer定义神经网络的输出层，激活函数为全等映射，此层暂时不使用softmax,在后面会处理。
+再创建一个Dropout层，并使用tf.summary.scalar记录keep_prob。然后再使用nn_layer定义神经网络的输出层，激活函数为全等映射，此层暂时不使用softmax,在后面会处理。
 """
 hidden1 = nn_layer(x, 784, 500, 'layer1')  # 建立第一层 隐藏层
 
@@ -144,10 +144,10 @@ tf.global_variables_initializer().run()  # 初始化全部向量
 如果训练标记为False，则获取测试数据，并设置keep_prob为1,即等于没有dropout效果。
 """
 def feed_dict(train):
-    if train:  # 如果是训练的话需要Droupout 
+    if train:  # 如果是训练的话需要Dropout 
         xs, ys = mnist.train.next_batch(100)
         k = dropout
-    else:  # 测试的时候不要Droupout
+    else:  # 测试的时候不要Dropout
         xs, ys = mnist.test.images, mnist.test.labels
         k = 1.0
     return {x: xs, y: ys, keep_prob: k}
